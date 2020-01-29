@@ -1,0 +1,8 @@
+.fakeAnchor {
+  color: blue;
+  text-decoration: underline;
+}
+
+.fakeAnchor:hover {
+  cursor: pointer;
+}
