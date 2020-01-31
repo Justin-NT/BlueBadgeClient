@@ -11,10 +11,11 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 345
+    maxWidth: 380,
+    minWidth: 220
   },
   media: {
-    height: 140
+    height: 200
   }
 });
 
@@ -39,7 +40,9 @@ const GameDisplay = props => {
   const displayPlatforms = () => {
     let platStrings = "";
     let platform = props.game.platforms;
-    platform.length > 1
+    platform === null
+      ? (platStrings = "")
+      : platform.length > 1
       ? platform.forEach(ele => {
           platStrings += `${ele.platform.name}, `;
         })
@@ -116,9 +119,15 @@ const GameDisplay = props => {
           className={classes.media}
           image={displayImage()}
           title="Game Image"
+          // style={{ height: 200 }}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h2"
+            style={{ textAlign: "center" }}
+          >
             {props.game.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -135,7 +144,9 @@ const GameDisplay = props => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>{checkForToken()}</CardActions>
+      <CardActions style={{ backgroundColor: "purple" }}>
+        {checkForToken()}
+      </CardActions>
     </Card>
   );
 };

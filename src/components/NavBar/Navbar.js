@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,7 +12,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Tab from "@material-ui/core/Tab";
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -225,7 +225,7 @@ function Navbar(props) {
             />
           </div>
           <Link to="/signin" style={{ textDecoration: "none" }}>
-            <Tab label="Sign in" style={{ color: "white" }} />
+            <Tab label="Sign in" style={{ color: "white", opacity: 1 }} />
           </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

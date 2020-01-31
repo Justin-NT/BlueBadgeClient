@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import GameListDisplay from "./GameListDisplay";
+import { withRouter } from "react-router-dom";
 
 const UserGameList = props => {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
+    showListing();
+  }, []);
+
+  const showListing = () => {
     fetch("http://localhost:3000/gamelog/showlistings", {
       method: "GET",
       headers: new Headers({
@@ -17,7 +22,7 @@ const UserGameList = props => {
         console.log(res);
         setResults(res);
       });
-  }, []);
+  };
 
   const personalDisplay = () => {
     return results.map(game => {
@@ -27,11 +32,30 @@ const UserGameList = props => {
           className="games"
           style={{ margin: "10px 0 10px 0" }}
         >
-          <GameListDisplay game={game} />
+          <GameListDisplay
+            game={game}
+            sessionToken={props.sessionToken}
+            showListing={showListing}
+          />
         </div>
       );
     });
   };
+
+  // const loginChecker = () => {
+  //   if (
+  //     props.sessionToken !== undefined &&
+  //     props.sessionToken !== "" &&
+  //     props.location.pathname === "/user/gamelist" &&
+  //     props.sessionToken !== null
+  //   ) {
+  // props.history.push("/signin");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   loginChecker();
+  // }, [props.sessionToken]);
 
   return (
     <div
@@ -47,4 +71,4 @@ const UserGameList = props => {
   );
 };
 
-export default UserGameList;
+export default withRouter(UserGameList);

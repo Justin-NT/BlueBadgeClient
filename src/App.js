@@ -48,10 +48,10 @@ function App() {
             <Redirect to="/home" />
           </Route>
           <Route exact path="/signin">
-            <Signin updateToken={updateToken} />
+            <Signin updateToken={updateToken} sessionToken={sessionToken} />
           </Route>
           <Route exact path="/signup">
-            <Signup updateToken={updateToken} />
+            <Signup updateToken={updateToken} sessionToken={sessionToken} />
           </Route>
           <Route exact path="/home">
             <GameDB results={results} sessionToken={sessionToken} />
