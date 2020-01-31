@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import GameListDisplay from "./GameListDisplay";
 import { withRouter } from "react-router-dom";
+import APIURL from "../../helpers/environment";
 
 const UserGameList = props => {
   const [results, setResults] = useState([]);
@@ -10,7 +11,7 @@ const UserGameList = props => {
   }, []);
 
   const showListing = () => {
-    fetch("http://localhost:3000/gamelog/showlistings", {
+    fetch(`${APIURL}/gamelog/showlistings`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",

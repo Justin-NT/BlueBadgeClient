@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import APIURL from "../../helpers/environment";
 import "./Signup.css";
 
 const useStyles = makeStyles(theme => ({
@@ -43,7 +44,7 @@ const SignUp = props => {
   let handleSubmit = e => {
     e.preventDefault();
     password.length >= 5
-      ? fetch("http://localhost:3000/user/signup", {
+      ? fetch(`${APIURL}/user/signup`, {
           method: "POST",
           body: JSON.stringify({
             fullName: fullName,
