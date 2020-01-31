@@ -1,5 +1,6 @@
 #componentWrapper {
-  /* background-image: require("../assets/arcade.jpg"); */
-  background-color: red;
+  background-image: require("../assets/arcade.jpg");
+  /* background-color: red; */
   min-height: 100vh;
+  max-height: 100vh;
 }
