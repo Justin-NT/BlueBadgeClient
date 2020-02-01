@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import APIURL from "../../helpers/environment";
 import "./Signup.css";
+import { InputLabel } from "@material-ui/core/InputLabel";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -25,12 +26,25 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
-  },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  test: {
+    color: "black",
+    backgroundColor: "white",
+    textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+  },
+  root: {
+    "& .MuiFormLabel-root": {
+      color: "black"
+    },
+    form: {
+      width: "100%", // Fix IE 11 issue.
+      marginTop: theme.spacing(3)
+    },
+    "& .MuiInputBase-input": {
+      // border: "white 1.2px solid"
+    }
   }
 }));
 
@@ -76,17 +90,22 @@ const SignUp = props => {
   }, [props.sessionToken]);
 
   return (
-    <div id="componentWrapper">
+    <div id="componentWrapper" InputProps={{ className: classes.root }}>
       <Container component="main" maxWidth="xs" id="signupContainer">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" id="signup">
+          <Typography
+            component="h1"
+            variant="h5"
+            id="signup"
+            style={{ color: "white", marginBottom: 25 }}
+          >
             Sign up
           </Typography>
-          <form className={classes.form} onSubmit={e => handleSubmit(e)}>
+          <form className={classes.root} onSubmit={e => handleSubmit(e)}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -99,6 +118,7 @@ const SignUp = props => {
                   autoFocus
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
+                  InputProps={{ className: classes.test }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -112,6 +132,7 @@ const SignUp = props => {
                   autoComplete="username"
                   value={userName}
                   onChange={e => setUserName(e.target.value)}
+                  InputProps={{ className: classes.test }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -125,6 +146,7 @@ const SignUp = props => {
                   autoComplete="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
+                  InputProps={{ className: classes.test }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -138,6 +160,7 @@ const SignUp = props => {
                   id="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
+                  InputProps={{ className: classes.test }}
                 />
               </Grid>
             </Grid>
@@ -152,7 +175,7 @@ const SignUp = props => {
             </Button>
             <Grid container justify="center">
               <Grid item>
-                <Link to="/signin" variant="body2">
+                <Link to="/signin" variant="body2" style={{ color: "white" }}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -162,9 +185,9 @@ const SignUp = props => {
         <Box mt={8}>
           <Typography variant="body2" color="textSecondary" align="center">
             <a
-              color="inherit"
               href="https://justin-nt.github.io/"
               target="blank"
+              style={{ color: "white" }}
             >
               Portfolio
             </a>
@@ -172,6 +195,7 @@ const SignUp = props => {
             <a
               href="https://www.linkedin.com/in/justin-terry-743939194/"
               target="blank"
+              style={{ color: "white" }}
             >
               <span>LinkedIn</span>
             </a>
