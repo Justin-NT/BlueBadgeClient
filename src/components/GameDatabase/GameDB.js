@@ -1,5 +1,6 @@
 import React from "react";
 import GameDisplay from "./GameDisplay";
+import "./GameDB.css";
 
 const GameDB = props => {
   const gameMapper = () => {
@@ -8,7 +9,7 @@ const GameDB = props => {
         <div
           key={game.id}
           className="games"
-          style={{ margin: "10px 0 10px 0" }}
+          style={{ margin: "40px 20px 5px 20px" }}
         >
           <GameDisplay game={game} sessionToken={props.sessionToken} />
         </div>
@@ -17,15 +18,11 @@ const GameDB = props => {
   };
 
   return (
-    <div
-      className="gameContainer"
-      style={{
-        display: "flex",
-        flexFlow: "wrap column",
-        alignContent: "center"
-      }}
-    >
-      {gameMapper()}
+    <div id="gameWrapper">
+      <div className="titleText">
+        <h1>Game Results</h1>
+      </div>
+      <div id="gameContainer">{gameMapper()}</div>
     </div>
   );
 };

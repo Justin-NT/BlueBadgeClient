@@ -31,7 +31,7 @@ const UserGameList = props => {
         <div
           key={game.id}
           className="games"
-          style={{ margin: "10px 0 10px 0" }}
+          style={{ margin: "40px 20px 5px 20px" }}
         >
           <GameListDisplay
             game={game}
@@ -59,15 +59,11 @@ const UserGameList = props => {
   // }, [props.sessionToken]);
 
   return (
-    <div
-      className="gameContainer"
-      style={{
-        display: "flex",
-        flexFlow: "wrap column",
-        alignContent: "center"
-      }}
-    >
-      {personalDisplay()}
+    <div id="gameWrapper">
+      <div className="titleText">
+        <h1>Personal Game Log</h1>
+      </div>
+      <div id="gameContainer">{personalDisplay()}</div>
     </div>
   );
 };

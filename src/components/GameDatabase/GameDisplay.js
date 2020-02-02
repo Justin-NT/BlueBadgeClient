@@ -8,15 +8,17 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import APIURL from "../../helpers/environment";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 380,
-    minWidth: 220
+    maxWidth: 500,
+    minWidth: 240,
+    border: "1px solid black"
   },
   media: {
-    height: 200
+    height: 240
   }
 });
 
@@ -120,32 +122,49 @@ const GameDisplay = props => {
           className={classes.media}
           image={displayImage()}
           title="Game Image"
-          // style={{ height: 200 }}
         />
-        <CardContent>
+        <CardContent style={{ backgroundColor: "papayawhip" }}>
           <Typography
             gutterBottom
             variant="h5"
             component="h2"
-            style={{ textAlign: "center" }}
+            style={{ textAlign: "center", fontWeight: 700 }}
           >
             {props.game.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Rating: {props.game.rating}/5
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Released: {props.game.released}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Platforms: {displayPlatforms()}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Genres: {displayGenres()}
-          </Typography>
+          <hr></hr>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: 500 }}>
+                Rating: {props.game.rating}/5
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: 500 }}>
+                Released: {props.game.released}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: 500 }}>
+                Genre(s): {displayGenres()}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: 500 }}>
+                Platform(s): {displayPlatforms()}
+              </Typography>
+            </Grid>
+          </Grid>
         </CardContent>
       </CardActionArea>
-      <CardActions style={{ backgroundColor: "purple" }}>
+      <CardActions
+        style={{
+          backgroundColor: "navajowhite",
+          justifyContent: "center"
+        }}
+      >
         {checkForToken()}
       </CardActions>
     </Card>

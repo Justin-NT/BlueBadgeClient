@@ -24,26 +24,32 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: "#BF2C74"
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
   },
-  test: {
+  formBackground: {
     color: "black",
     backgroundColor: "white",
-    textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+    border: "1px solid black"
   },
   root: {
     "& .MuiFormLabel-root": {
       color: "black"
     },
+    "& .MuiFormLabel-root.selected": {
+      textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+    },
     form: {
       width: "100%", // Fix IE 11 issue.
       marginTop: theme.spacing(3)
     },
-    "& .MuiInputBase-input": {
-      // border: "white 1.2px solid"
+    "& .MuiButton-contained": {
+      backgroundColor: "#FF009A",
+      border: "1px solid black",
+      color: "white",
+      textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
     }
   }
 }));
@@ -101,7 +107,11 @@ const SignUp = props => {
             component="h1"
             variant="h5"
             id="signup"
-            style={{ color: "white", marginBottom: 25 }}
+            style={{
+              color: "white",
+              marginBottom: 25,
+              textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+            }}
           >
             Sign up
           </Typography>
@@ -118,7 +128,10 @@ const SignUp = props => {
                   autoFocus
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
-                  InputProps={{ className: classes.test }}
+                  InputProps={{ className: classes.formBackground }}
+                  // classes={{
+                  //   focused: classes.root["& .MuiFormLabel-root-focused"]
+                  // }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -132,7 +145,7 @@ const SignUp = props => {
                   autoComplete="username"
                   value={userName}
                   onChange={e => setUserName(e.target.value)}
-                  InputProps={{ className: classes.test }}
+                  InputProps={{ className: classes.formBackground }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -146,7 +159,7 @@ const SignUp = props => {
                   autoComplete="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  InputProps={{ className: classes.test }}
+                  InputProps={{ className: classes.formBackground }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -160,7 +173,7 @@ const SignUp = props => {
                   id="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  InputProps={{ className: classes.test }}
+                  InputProps={{ className: classes.formBackground }}
                 />
               </Grid>
             </Grid>
@@ -168,14 +181,21 @@ const SignUp = props => {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
               className={classes.submit}
             >
               Sign Up
             </Button>
             <Grid container justify="center">
               <Grid item>
-                <Link to="/signin" variant="body2" style={{ color: "white" }}>
+                <Link
+                  to="/signin"
+                  variant="body2"
+                  style={{
+                    color: "white",
+                    textShadow:
+                      "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+                  }}
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -187,7 +207,11 @@ const SignUp = props => {
             <a
               href="https://justin-nt.github.io/"
               target="blank"
-              style={{ color: "white" }}
+              style={{
+                color: "white",
+                textShadow:
+                  "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              }}
             >
               Portfolio
             </a>
@@ -195,7 +219,11 @@ const SignUp = props => {
             <a
               href="https://www.linkedin.com/in/justin-terry-743939194/"
               target="blank"
-              style={{ color: "white" }}
+              style={{
+                color: "white",
+                textShadow:
+                  "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+              }}
             >
               <span>LinkedIn</span>
             </a>
