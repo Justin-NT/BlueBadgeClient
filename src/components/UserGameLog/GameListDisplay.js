@@ -64,7 +64,6 @@ const GameListDisplay = props => {
   };
 
   const deleteFunc = () => {
-    console.log("goodbye");
     fetch(`${APIURL}/gamelog/deletelisting/${props.game.id}`, {
       method: "DELETE",
       headers: new Headers({

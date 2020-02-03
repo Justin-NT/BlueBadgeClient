@@ -14,8 +14,8 @@ import {
 
 function App() {
   const [results, setResults] = useState([]);
-  const [userTitle, setUserTitle] = useState("");
   const [sessionToken, setSessionToken] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -33,15 +33,16 @@ function App() {
     setSessionToken("");
   };
 
+  console.log("app.js", pageNumber);
+
   return (
     <div>
       <Router>
         <Navbar
-          userTitle={userTitle}
-          setUserTitle={setUserTitle}
           results={results}
           setResults={setResults}
           clearToken={clearToken}
+          pageNumber={pageNumber}
         />
         <Switch>
           <Route exact path="/">
@@ -54,7 +55,12 @@ function App() {
             <Signup updateToken={updateToken} sessionToken={sessionToken} />
           </Route>
           <Route exact path="/home">
-            <GameDB results={results} sessionToken={sessionToken} />
+            <GameDB
+              results={results}
+              sessionToken={sessionToken}
+              pageNumber={pageNumber}
+              setPageNumber={setPageNumber}
+            />
           </Route>
           <Route exact path="/user/gamelist">
             <GameLog sessionToken={sessionToken} />

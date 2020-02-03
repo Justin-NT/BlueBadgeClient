@@ -43,25 +43,10 @@ const UserGameList = props => {
     });
   };
 
-  // const loginChecker = () => {
-  //   if (
-  //     props.sessionToken !== undefined &&
-  //     props.sessionToken !== "" &&
-  //     props.location.pathname === "/user/gamelist" &&
-  //     props.sessionToken !== null
-  //   ) {
-  // props.history.push("/signin");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   loginChecker();
-  // }, [props.sessionToken]);
-
   return (
     <div id="gameWrapper">
       <div className="titleText">
-        <h1>Personal Game Log</h1>
+        <h1 style={{ fontSize: 45 }}>Personal Game Log</h1>
       </div>
       <div id="gameContainer">{personalDisplay()}</div>
     </div>

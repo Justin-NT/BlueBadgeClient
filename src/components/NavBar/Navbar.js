@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -89,6 +89,8 @@ function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [userTitle, setUserTitle] = useState("");
+  // const [newPage, setNewPage] = useState(props.pageNumber);
 
   let baseurl = "https://api.rawg.io/api/games?search=";
 
@@ -117,6 +119,13 @@ function Navbar(props) {
     handleMenuClose();
   };
 
+  useEffect(() => {
+    console.log();
+    return userTitle !== "" || userTitle !== null
+      ? fetchGames
+      : console.log("No! >:}");
+  }, [props.pageNumber]);
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -128,7 +137,6 @@ function Navbar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
       <Link
         to="/user/gamelist"
         style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
@@ -164,10 +172,11 @@ function Navbar(props) {
     </Menu>
   );
 
-  const fetchGames = e => {
-    e.preventDefault();
-    let url = props.userTitle
-      ? (baseurl += props.userTitle)
+  const fetchGames = () => {
+    // e.preventDefault();
+    console.log(userTitle);
+    let url = userTitle
+      ? (baseurl += userTitle + `&page=${props.pageNumber}`)
       : alert("please enter a value in the search bar");
 
     console.log(url);
@@ -212,7 +221,7 @@ function Navbar(props) {
                 input: classes.inputInput
               }}
               inputProps={{ "aria-label": "search" }}
-              onChange={e => props.setUserTitle(e.target.value)}
+              onChange={e => setUserTitle(e.target.value)}
               onKeyPress={e => {
                 if (e.key === "Enter") {
                   if (props.location.pathname !== "/home") {
