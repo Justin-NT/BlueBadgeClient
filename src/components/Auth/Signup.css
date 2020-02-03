@@ -1,18 +1,6 @@
 #componentWrapper {
   background-image: url("../../assets/arcade.jpg");
   background-size: cover;
-  min-height: 93.5vh;
-  max-height: 100vh;
-}
-
-.MuiFormLabel-root {
-  color: white;
-}
-
-.MuiInputBase-input-root {
-  color: lightgreen;
-}
-
-.Mui-focused {
-  color: lightgreen;
+  /* min-height: 94.144226vh; */
+  min-height: 93.6vh;
 }

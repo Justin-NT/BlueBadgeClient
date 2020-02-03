@@ -13,10 +13,14 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Tab from "@material-ui/core/Tab";
 import { Link, withRouter } from "react-router-dom";
+import "./Navbar.css";
 
 const useStyles = makeStyles(theme => ({
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
+    "& .MuiAppBar-root": {
+      backgroundColor: "#060D14"
+    }
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -30,6 +34,7 @@ const useStyles = makeStyles(theme => ({
   search: {
     position: "relative",
     justifyContent: "center",
+    marginLeft: "33%",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
@@ -37,11 +42,13 @@ const useStyles = makeStyles(theme => ({
       cursor: "pointer"
     },
     marginRight: theme.spacing(2),
-    marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
       width: "auto"
+    },
+    "@media (min-width: 600px)": {
+      marginLeft: "37%"
     }
   },
   searchIcon: {
@@ -121,7 +128,7 @@ function Navbar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
       <Link
         to="/user/gamelist"
         style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
@@ -183,20 +190,12 @@ function Navbar(props) {
     <div className={classes.grow}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Typography
               className={classes.title}
               variant="h6"
               noWrap
-              style={{ color: "white" }}
+              style={{ color: "white", marginLeft: 45 }}
             >
               GameLog
             </Typography>
@@ -207,7 +206,7 @@ function Navbar(props) {
             </div>
             <InputBase
               className="searchField"
-              placeholder="Search…"
+              placeholder="Search for a game title..."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
@@ -224,7 +223,10 @@ function Navbar(props) {
               }}
             />
           </div>
-          <Link to="/signin" style={{ textDecoration: "none" }}>
+          <Link
+            to="/signin"
+            style={{ textDecoration: "none", marginLeft: "30%" }}
+          >
             <Tab label="Sign in" style={{ color: "white", opacity: 1 }} />
           </Link>
           <div className={classes.grow} />

@@ -9,15 +9,17 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import APIURL from "../../helpers/environment";
+import Grid from "@material-ui/core/Grid";
+import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 380,
-    minWidth: 220
-    // fontFamily: "Roboto, sans-serif"
+    maxWidth: 500,
+    minWidth: 240,
+    border: "1px solid black"
   },
   media: {
-    height: 200
+    height: 240
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -91,29 +93,41 @@ const GameListDisplay = props => {
           className={classes.media}
           image={props.game.backgroundImage}
           title={props.game.title}
-          // style={{ height: 200 }}
         />
-        <CardContent>
+        <CardContent style={{ backgroundColor: "papayawhip" }}>
           <Typography
             gutterBottom
             variant="h5"
             component="h2"
-            style={{ textAlign: "center" }}
+            style={{ textAlign: "center", fontWeight: 700 }}
           >
             {props.game.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Rating: {props.game.rating}/5
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Release Date: {props.game.releaseDate}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Platform(s): {props.game.platform}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Genre(s): {props.game.genre}
-          </Typography>
+          <hr></hr>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: 500 }}>
+                Rating: {props.game.rating}/5
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: 500 }}>
+                Released: {props.game.releaseDate}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: 500 }}>
+                Genre(s): {props.game.genre}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography style={{ fontWeight: 500 }}>
+                Platform(s): {props.game.platform}
+              </Typography>
+            </Grid>
+          </Grid>
           <form className={classes.root} id={`${props.game.id}1`}>
             <div>
               <TextField
@@ -135,11 +149,16 @@ const GameListDisplay = props => {
           </form>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary" onClick={updateFunc}>
+      <CardActions
+        style={{
+          backgroundColor: "navajowhite",
+          justifyContent: "space-evenly"
+        }}
+      >
+        <Button size="medium" onClick={updateFunc} style={{ color: "#3f51b5" }}>
           Update
         </Button>
-        <Button size="small" color="secondary" onClick={deleteFunc}>
+        <Button size="medium" onClick={deleteFunc} style={{ color: "red" }}>
           Delete
         </Button>
       </CardActions>

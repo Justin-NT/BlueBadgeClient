@@ -6,3 +6,9 @@
 .fakeAnchor:hover {
   cursor: pointer;
 }
+
+#componentWrapper {
+  background-image: url("../../assets/arcade.jpg");
+  background-size: cover;
+  min-height: 93.6vh;
+}
