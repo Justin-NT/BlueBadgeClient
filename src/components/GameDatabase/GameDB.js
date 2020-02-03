@@ -1,7 +1,6 @@
 import React from "react";
 import GameDisplay from "./GameDisplay";
 import "./GameDB.css";
-import { Alert, AlertTitle } from "@material-ui/lab";
 
 const GameDB = props => {
   const gameMapper = () => {

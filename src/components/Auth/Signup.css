@@ -1,6 +1,10 @@
 #componentWrapper {
   background-image: url("../../assets/arcade.jpg");
   background-size: cover;
+<<<<<<< HEAD
   /* min-height: 94.144226vh; */
   min-height: 93.6vh;
+=======
+  min-height: 94.144226vh;
+>>>>>>> ca735d8e1ac6e42ec9c14f90326b5eb81448bd5e
 }

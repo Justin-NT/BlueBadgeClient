@@ -125,6 +125,12 @@ const SignUp = props => {
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
                   InputProps={{ className: classes.formBackground }}
+<<<<<<< HEAD
+=======
+                  // classes={{
+                  //   focused: classes.root["& .MuiFormLabel-root-focused"]
+                  // }}
+>>>>>>> ca735d8e1ac6e42ec9c14f90326b5eb81448bd5e
                 />
               </Grid>
               <Grid item xs={12}>

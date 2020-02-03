@@ -31,7 +31,11 @@ const UserGameList = props => {
         <div
           key={game.id}
           className="games"
+<<<<<<< HEAD
           style={{ margin: "25px 20px 25px 20px" }}
+=======
+          style={{ margin: "40px 20px 5px 20px" }}
+>>>>>>> ca735d8e1ac6e42ec9c14f90326b5eb81448bd5e
         >
           <GameListDisplay
             game={game}

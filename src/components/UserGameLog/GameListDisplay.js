@@ -10,7 +10,10 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import APIURL from "../../helpers/environment";
 import Grid from "@material-ui/core/Grid";
+<<<<<<< HEAD
 import { red } from "@material-ui/core/colors";
+=======
+>>>>>>> ca735d8e1ac6e42ec9c14f90326b5eb81448bd5e
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -112,7 +115,11 @@ const GameListDisplay = props => {
             </Grid>
             <Grid item xs={6}>
               <Typography style={{ fontWeight: 500 }}>
+<<<<<<< HEAD
                 Released: {props.game.releaseDate}
+=======
+                Released: {props.game.released}
+>>>>>>> ca735d8e1ac6e42ec9c14f90326b5eb81448bd5e
               </Typography>
             </Grid>
           </Grid>
@@ -155,10 +162,17 @@ const GameListDisplay = props => {
           justifyContent: "space-evenly"
         }}
       >
+<<<<<<< HEAD
         <Button size="medium" onClick={updateFunc} style={{ color: "#3f51b5" }}>
           Update
         </Button>
         <Button size="medium" onClick={deleteFunc} style={{ color: "red" }}>
+=======
+        <Button size="small" onClick={updateFunc}>
+          Update
+        </Button>
+        <Button size="small" onClick={deleteFunc}>
+>>>>>>> ca735d8e1ac6e42ec9c14f90326b5eb81448bd5e
           Delete
         </Button>
       </CardActions>
