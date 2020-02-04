@@ -1,6 +1,7 @@
 import React from "react";
 import GameDisplay from "./GameDisplay";
 import "./GameDB.css";
+import Grid from "@material-ui/core/Grid";
 
 const GameDB = props => {
   const gameMapper = () => {
@@ -34,7 +35,16 @@ const GameDB = props => {
     <div id="gameWrapper">
       <div className="titleText">
         <h1 style={{ fontSize: 45 }}>Game Results</h1>
-        <button onClick={pageUp}>Next Page</button>
+      </div>
+      <div id="btnsContainer">
+        <Grid container spacing={6} id="btns">
+          <Grid item xs={6}>
+            <button onClick={pageDown}>Prev Page</button>
+          </Grid>
+          <Grid item xs={6}>
+            <button onClick={pageUp}>Next Page</button>
+          </Grid>
+        </Grid>
       </div>
       <div id="gameContainer">{gameMapper()}</div>
     </div>

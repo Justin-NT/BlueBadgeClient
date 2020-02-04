@@ -89,7 +89,7 @@ function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [userTitle, setUserTitle] = useState("");
+  const [userTitle, setUserTitle] = useState(undefined);
   // const [newPage, setNewPage] = useState(props.pageNumber);
 
   let baseurl = "https://api.rawg.io/api/games?search=";
@@ -120,9 +120,8 @@ function Navbar(props) {
   };
 
   useEffect(() => {
-    console.log();
-    return userTitle !== "" || userTitle !== null
-      ? fetchGames
+    return userTitle !== "" && userTitle != null && userTitle !== undefined
+      ? fetchGames()
       : console.log("No! >:}");
   }, [props.pageNumber]);
 
