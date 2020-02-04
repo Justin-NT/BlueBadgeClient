@@ -174,7 +174,7 @@ function Navbar(props) {
 
   const fetchGames = () => {
     // e.preventDefault();
-    console.log(userTitle);
+    console.log("fetchGames", userTitle);
     let url = userTitle
       ? (baseurl += userTitle + `&page=${props.pageNumber}`)
       : alert("please enter a value in the search bar");
