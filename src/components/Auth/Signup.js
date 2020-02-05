@@ -12,11 +12,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import APIURL from "../../helpers/environment";
 import "./Signup.css";
-import { InputLabel } from "@material-ui/core/InputLabel";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    // marginTop: theme.spacing(8),
     paddingTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
@@ -60,6 +59,7 @@ const SignUp = props => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [failureSwitch, setFailureSwitch] = useState(false);
 
   let handleSubmit = e => {
     e.preventDefault();
@@ -77,7 +77,13 @@ const SignUp = props => {
           })
         })
           .then(response => response.json())
-          .then(data => props.updateToken(data.sessionToken))
+          .then(data => {
+            if ("error" in data) {
+              failureAlert();
+            } else {
+              props.updateToken(data.sessionToken);
+            }
+          })
       : alert("Your password must be 5 characters or longer!");
   };
 
@@ -87,12 +93,29 @@ const SignUp = props => {
       props.sessionToken !== "" &&
       props.location.pathname === "/signup"
     ) {
-      props.history.push("/user/gamelist");
+      props.history.push("/home");
     }
   }, [props.sessionToken]);
 
+  const failureAlert = () => {
+    setFailureSwitch(true);
+    setTimeout(() => {
+      setFailureSwitch(false);
+    }, 2000);
+  };
+
+  const displayFailure = () => {
+    return failureSwitch ? (
+      <Grid item xs={12}>
+        <Alert color="error" severity="error">
+          Failed to Signup! Make sure your email and password are valid!
+        </Alert>
+      </Grid>
+    ) : null;
+  };
+
   return (
-    <div id="componentWrapper" InputProps={{ className: classes.root }}>
+    <div id="componentWrapper" className={classes.root}>
       <Container component="main" maxWidth="xs" id="signupContainer">
         <CssBaseline />
         <div className={classes.paper}>
@@ -192,6 +215,7 @@ const SignUp = props => {
                   Already have an account? Sign in
                 </Link>
               </Grid>
+              {displayFailure()}
             </Grid>
           </form>
         </div>

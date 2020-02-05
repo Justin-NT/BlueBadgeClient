@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import Tab from "@material-ui/core/Tab";
 import { Link, withRouter } from "react-router-dom";
 import "./Navbar.css";
@@ -19,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1,
     "& .MuiAppBar-root": {
-      backgroundColor: "#060D14"
+      backgroundColor: "#080F19"
     }
   },
   menuButton: {
@@ -34,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   search: {
     position: "relative",
     justifyContent: "center",
-    marginLeft: "33%",
+    // marginLeft: "15%",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
@@ -48,7 +42,7 @@ const useStyles = makeStyles(theme => ({
       width: "auto"
     },
     "@media (min-width: 600px)": {
-      marginLeft: "37%"
+      minWidth: 200
     }
   },
   searchIcon: {
@@ -68,7 +62,7 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: 200
+      width: 400
     }
   },
   sectionDesktop: {
@@ -87,90 +81,22 @@ const useStyles = makeStyles(theme => ({
 
 function Navbar(props) {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   let baseurl = "https://api.rawg.io/api/games?search=";
+  let currentTitle;
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  useEffect(() => {
+    return props.userTitle !== "" &&
+      props.userTitle != null &&
+      props.userTitle !== undefined
+      ? fetchGames()
+      : console.log("No! >:}");
+  }, [props.pageNumber]);
 
-  const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const doBoth = () => {
-    props.clearToken();
-    handleMenuClose();
-  };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
-      <Link
-        to="/user/gamelist"
-        style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
-      >
-        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      </Link>
-      <MenuItem onClick={doBoth}>Sign Out</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-
-  const fetchGames = e => {
-    e.preventDefault();
+  const fetchGames = () => {
     let url = props.userTitle
-      ? (baseurl += props.userTitle)
+      ? (baseurl += props.userTitle + `&page=${props.pageNumber}`)
       : alert("please enter a value in the search bar");
-
-    console.log(url);
 
     fetch(url, {
       method: "GET",
@@ -182,14 +108,32 @@ function Navbar(props) {
       .then(data => {
         console.log(data.results);
         props.setResults(data.results);
+        props.setCount(data.count);
+        currentTitle = props.userTitle;
       })
       .catch(err => console.log(err));
+  };
+
+  const authSwap = () => {
+    return props.sessionToken ? (
+      <Link
+        to="/signin"
+        onClick={props.clearToken}
+        style={{ textDecoration: "none", marginLeft: "25%" }}
+      >
+        <Tab label="Sign Out" style={{ color: "white", opacity: 1 }} />
+      </Link>
+    ) : (
+      <Link to="/signin" style={{ textDecoration: "none", marginLeft: "25%" }}>
+        <Tab label="Sign in" style={{ color: "white", opacity: 1 }} />
+      </Link>
+    );
   };
 
   return (
     <div className={classes.grow}>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar style={{ justifyContent: "space-between" }}>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Typography
               className={classes.title}
@@ -197,7 +141,7 @@ function Navbar(props) {
               noWrap
               style={{ color: "white", marginLeft: 45 }}
             >
-              GameLog
+              Home
             </Typography>
           </Link>
           <div className={classes.search}>
@@ -218,46 +162,33 @@ function Navbar(props) {
                   if (props.location.pathname !== "/home") {
                     props.history.push("/home");
                   }
-                  fetchGames(e);
+                  if (props.userTitle !== currentTitle) {
+                    console.log(currentTitle);
+                    if (props.pageNumber > 1) {
+                      props.setPageNumber(1);
+                    } else {
+                      fetchGames();
+                    }
+                    currentTitle = props.userTitle;
+                  }
                 }
               }}
             />
           </div>
-          <Link
-            to="/signin"
-            style={{ textDecoration: "none", marginLeft: "30%" }}
-          >
-            <Tab label="Sign in" style={{ color: "white", opacity: 1 }} />
-          </Link>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
+          <div id="testing123">
+            {authSwap()}
+            {props.sessionToken ? (
+              <Link to="/user/gamelist" style={{ textDecoration: "none" }}>
+                <Tab
+                  label="My List"
+                  style={{ color: "white", opacity: 1 }}
+                ></Tab>
+              </Link>
+            ) : null}
           </div>
         </Toolbar>
       </AppBar>
       <Toolbar />
-      {renderMobileMenu}
-      {renderMenu}
     </div>
   );
 }

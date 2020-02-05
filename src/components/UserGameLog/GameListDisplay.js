@@ -10,13 +10,17 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import APIURL from "../../helpers/environment";
 import Grid from "@material-ui/core/Grid";
-import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 500,
     minWidth: 240,
-    border: "1px solid black"
+    border: "1px solid black",
+    color: "white",
+    textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black",
+    "&:hover": {
+      border: "1px solid white"
+    }
   },
   media: {
     height: 240
@@ -24,12 +28,21 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200
+    width: "100%"
   },
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: 200
+      width: "90%"
+    },
+    "& .MuiOutlinedInput-multiline": {
+      color: "white"
+    },
+    "& .MuiFormHelperText-root": {
+      color: "white"
+    },
+    "& .MuiOutlinedInput-root": {
+      borderColor: "white"
     }
   }
 }));
@@ -58,13 +71,13 @@ const GameListDisplay = props => {
       .then(res => res.json())
       .then(logData => {
         console.log(logData);
+        setComment("");
         props.showListing();
       })
       .catch(err => console.log(err));
   };
 
   const deleteFunc = () => {
-    console.log("goodbye");
     fetch(`${APIURL}/gamelog/deletelisting/${props.game.id}`, {
       method: "DELETE",
       headers: new Headers({
@@ -94,7 +107,12 @@ const GameListDisplay = props => {
           image={props.game.backgroundImage}
           title={props.game.title}
         />
-        <CardContent style={{ backgroundColor: "papayawhip" }}>
+        <CardContent
+          style={{
+            backgroundColor: "#4F3380",
+            textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+          }}
+        >
           <Typography
             gutterBottom
             variant="h5"
@@ -129,33 +147,32 @@ const GameListDisplay = props => {
             </Grid>
           </Grid>
           <form className={classes.root} id={`${props.game.id}1`}>
-            <div>
-              <TextField
-                id={`${props.game.id}`}
-                placeholder={nullComment()}
-                rowsMax="8"
-                value={comment}
-                variant="outlined"
-                multiline
-                helperText="comment"
-                onChange={e => setComment(e.target.value)}
-                fullWidth
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            </div>
+            <TextField
+              id={`${props.game.id}`}
+              placeholder={nullComment()}
+              rowsMax="12"
+              value={comment}
+              variant="outlined"
+              multiline
+              helperText="comment"
+              onChange={e => setComment(e.target.value)}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
           </form>
         </CardContent>
       </CardActionArea>
       <CardActions
         style={{
-          backgroundColor: "navajowhite",
+          // backgroundColor: "navajowhite",
+          backgroundColor: "#210C3F",
           justifyContent: "space-evenly"
         }}
       >
-        <Button size="medium" onClick={updateFunc} style={{ color: "#3f51b5" }}>
+        <Button size="medium" onClick={updateFunc} style={{ color: "white" }}>
           Update
         </Button>
         <Button size="medium" onClick={deleteFunc} style={{ color: "red" }}>

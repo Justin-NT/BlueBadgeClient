@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,12 +10,17 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import APIURL from "../../helpers/environment";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles({
   card: {
     maxWidth: 500,
     minWidth: 240,
-    border: "1px solid black"
+    border: "1px solid black",
+    color: "white",
+    "&:hover": {
+      border: "1px solid white"
+    }
   },
   media: {
     height: 240
@@ -23,7 +28,10 @@ const useStyles = makeStyles({
 });
 
 const GameDisplay = props => {
+  const [successSwitch, setSuccessSwitch] = useState(false);
+  const [failureSwitch, setFailureSwitch] = useState(false);
   const classes = useStyles();
+
   let genreValue;
   let platformValue;
   let placeholderImage =
@@ -81,12 +89,12 @@ const GameDisplay = props => {
 
   const checkForToken = () => {
     return props.sessionToken !== "" ? (
-      <Button size="medium" color="primary" onClick={addToDB}>
+      <Button size="medium" onClick={addToDB} style={{ color: "white" }}>
         Add to Game Bar
       </Button>
     ) : (
       <Link to="/signin" style={{ textDecoration: "none" }}>
-        <Button size="medium" color="primary">
+        <Button size="medium" style={{ color: "white" }}>
           Add to Game Bar
         </Button>
       </Link>
@@ -94,7 +102,6 @@ const GameDisplay = props => {
   };
 
   const addToDB = () => {
-    console.log(typeof props.game.rating);
     fetch(`${APIURL}/gamelog/createlisting`, {
       method: "POST",
       headers: new Headers({
@@ -111,8 +118,47 @@ const GameDisplay = props => {
       })
     })
       .then(res => res.json())
-      .then(logData => console.log(logData))
-      .catch(err => console.log(err));
+      .then(logData => {
+        console.log(logData);
+        if ("error" in logData) {
+          failureAlert();
+        } else {
+          successAlert();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const successAlert = () => {
+    setSuccessSwitch(true);
+    setTimeout(() => {
+      setSuccessSwitch(false);
+    }, 2000);
+  };
+
+  const failureAlert = () => {
+    setFailureSwitch(true);
+    setTimeout(() => {
+      setFailureSwitch(false);
+    }, 2000);
+  };
+
+  const displaySuccess = () => {
+    return successSwitch ? (
+      <Alert color="success" severity="success">
+        Successfully Added!
+      </Alert>
+    ) : null;
+  };
+
+  const displayFailure = () => {
+    return failureSwitch ? (
+      <Alert color="error" severity="error">
+        Failed to add! Make sure it's not added already!
+      </Alert>
+    ) : null;
   };
 
   return (
@@ -123,7 +169,13 @@ const GameDisplay = props => {
           image={displayImage()}
           title="Game Image"
         />
-        <CardContent style={{ backgroundColor: "papayawhip" }}>
+        {/* <CardContent style={{ backgroundColor: "papayawhip" }}> */}
+        <CardContent
+          style={{
+            backgroundColor: "#4F3380",
+            textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+          }}
+        >
           <Typography
             gutterBottom
             variant="h5"
@@ -161,12 +213,15 @@ const GameDisplay = props => {
       </CardActionArea>
       <CardActions
         style={{
-          backgroundColor: "navajowhite",
+          // backgroundColor: "navajowhite",
+          backgroundColor: "#210C3F",
           justifyContent: "center"
         }}
       >
         {checkForToken()}
       </CardActions>
+      {displaySuccess()}
+      {displayFailure()}
     </Card>
   );
 };

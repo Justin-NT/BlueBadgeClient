@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import GameListDisplay from "./GameListDisplay";
 import { withRouter } from "react-router-dom";
 import APIURL from "../../helpers/environment";
+import "./GameLog.css";
 
 const UserGameList = props => {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
     showListing();
-  }, []);
+  }, [props.sessionToken]);
 
   const showListing = () => {
     fetch(`${APIURL}/gamelog/showlistings`, {
@@ -43,25 +44,16 @@ const UserGameList = props => {
     });
   };
 
-  // const loginChecker = () => {
-  //   if (
-  //     props.sessionToken !== undefined &&
-  //     props.sessionToken !== "" &&
-  //     props.location.pathname === "/user/gamelist" &&
-  //     props.sessionToken !== null
-  //   ) {
-  // props.history.push("/signin");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   loginChecker();
-  // }, [props.sessionToken]);
-
   return (
     <div id="gameWrapper">
       <div className="titleText">
-        <h1>Personal Game Log</h1>
+        <h1 style={{ fontSize: 45 }}>Personal Game Log</h1>
+        {results.length === 0 ? (
+          <h1 style={{ fontSize: 45 }}>
+            This page displays the games that you've added! Right now you have
+            none, so try adding some!
+          </h1>
+        ) : null}
       </div>
       <div id="gameContainer">{personalDisplay()}</div>
     </div>
