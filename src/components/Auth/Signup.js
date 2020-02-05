@@ -87,7 +87,7 @@ const SignUp = props => {
       props.sessionToken !== "" &&
       props.location.pathname === "/signup"
     ) {
-      props.history.push("/user/gamelist");
+      props.history.push("/home");
     }
   }, [props.sessionToken]);
 

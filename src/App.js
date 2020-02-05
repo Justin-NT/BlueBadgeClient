@@ -16,6 +16,7 @@ function App() {
   const [results, setResults] = useState([]);
   const [sessionToken, setSessionToken] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -43,6 +44,10 @@ function App() {
           setResults={setResults}
           clearToken={clearToken}
           pageNumber={pageNumber}
+          count={count}
+          setCount={setCount}
+          sessionToken={sessionToken}
+          setPageNumber={setPageNumber}
         />
         <Switch>
           <Route exact path="/">
@@ -60,6 +65,8 @@ function App() {
               sessionToken={sessionToken}
               pageNumber={pageNumber}
               setPageNumber={setPageNumber}
+              count={count}
+              setCount={count}
             />
           </Route>
           <Route exact path="/user/gamelist">

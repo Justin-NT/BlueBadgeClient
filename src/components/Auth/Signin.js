@@ -71,21 +71,15 @@ const SignIn = props => {
       : alert("Your password must be 5 characters or longer!");
   };
 
-  const loginChecker = () => {
+  useEffect(() => {
     if (
       props.sessionToken !== undefined &&
       props.sessionToken !== "" &&
       props.location.pathname === "/signin" &&
       props.sessionToken !== null
     ) {
-      props.history.push("/user/gamelist");
-    } else {
-      return;
+      props.history.push("/home");
     }
-  };
-
-  useEffect(() => {
-    loginChecker();
   }, [props.sessionToken]);
 
   return (

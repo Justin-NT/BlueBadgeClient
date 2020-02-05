@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1,
     "& .MuiAppBar-root": {
-      backgroundColor: "#060D14"
+      backgroundColor: "#080F19"
     }
   },
   menuButton: {
@@ -89,8 +89,8 @@ function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [userTitle, setUserTitle] = useState(undefined);
-  // const [newPage, setNewPage] = useState(props.pageNumber);
+  const [userTitle, setUserTitle] = useState("call of duty");
+  let currentTitle;
 
   let baseurl = "https://api.rawg.io/api/games?search=";
 
@@ -172,7 +172,6 @@ function Navbar(props) {
   );
 
   const fetchGames = () => {
-    // e.preventDefault();
     console.log("fetchGames", userTitle);
     let url = userTitle
       ? (baseurl += userTitle + `&page=${props.pageNumber}`)
@@ -190,8 +189,26 @@ function Navbar(props) {
       .then(data => {
         console.log(data.results);
         props.setResults(data.results);
+        props.setCount(data.count);
+        currentTitle = userTitle;
       })
       .catch(err => console.log(err));
+  };
+
+  const authSwap = () => {
+    return props.sessionToken ? (
+      <Link
+        to="/signin"
+        onClick={props.clearToken}
+        style={{ textDecoration: "none", marginLeft: "25%" }}
+      >
+        <Tab label="Sign Out" style={{ color: "white", opacity: 1 }} />
+      </Link>
+    ) : (
+      <Link to="/signin" style={{ textDecoration: "none", marginLeft: "25%" }}>
+        <Tab label="Sign in" style={{ color: "white", opacity: 1 }} />
+      </Link>
+    );
   };
 
   return (
@@ -205,7 +222,7 @@ function Navbar(props) {
               noWrap
               style={{ color: "white", marginLeft: 45 }}
             >
-              GameLog
+              Home
             </Typography>
           </Link>
           <div className={classes.search}>
@@ -226,18 +243,18 @@ function Navbar(props) {
                   if (props.location.pathname !== "/home") {
                     props.history.push("/home");
                   }
-                  fetchGames(e);
+                  props.setPageNumber(1);
                 }
               }}
             />
           </div>
-          <Link
-            to="/signin"
-            style={{ textDecoration: "none", marginLeft: "30%" }}
-          >
-            <Tab label="Sign in" style={{ color: "white", opacity: 1 }} />
-          </Link>
-          <div className={classes.grow} />
+          {authSwap()}
+          {props.sessionToken ? (
+            <Link to="/user/gamelist" style={{ textDecoration: "none" }}>
+              <Tab label="My List" style={{ color: "white", opacity: 1 }}></Tab>
+            </Link>
+          ) : null}
+          {/* <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton
               edge="end"
@@ -260,7 +277,7 @@ function Navbar(props) {
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
       <Toolbar />

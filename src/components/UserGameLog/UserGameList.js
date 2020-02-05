@@ -47,6 +47,12 @@ const UserGameList = props => {
     <div id="gameWrapper">
       <div className="titleText">
         <h1 style={{ fontSize: 45 }}>Personal Game Log</h1>
+        {results.length === 0 ? (
+          <p>
+            This page displays the games that you've added! Right now you have
+            none, so try adding some!
+          </p>
+        ) : null}
       </div>
       <div id="gameContainer">{personalDisplay()}</div>
     </div>
