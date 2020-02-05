@@ -7,6 +7,7 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import Tab from "@material-ui/core/Tab";
 import { Link, withRouter } from "react-router-dom";
+import "./Navbar.css";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   search: {
     position: "relative",
     justifyContent: "center",
-    marginLeft: "33%",
+    // marginLeft: "15%",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
@@ -41,7 +42,7 @@ const useStyles = makeStyles(theme => ({
       width: "auto"
     },
     "@media (min-width: 600px)": {
-      marginLeft: "37%"
+      minWidth: 200
     }
   },
   searchIcon: {
@@ -61,7 +62,7 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: 200
+      width: 400
     }
   },
   sectionDesktop: {
@@ -80,20 +81,21 @@ const useStyles = makeStyles(theme => ({
 
 function Navbar(props) {
   const classes = useStyles();
-  const [userTitle, setUserTitle] = useState("call of duty");
 
   let baseurl = "https://api.rawg.io/api/games?search=";
   let currentTitle;
 
   useEffect(() => {
-    return userTitle !== "" && userTitle != null && userTitle !== undefined
+    return props.userTitle !== "" &&
+      props.userTitle != null &&
+      props.userTitle !== undefined
       ? fetchGames()
       : console.log("No! >:}");
   }, [props.pageNumber]);
 
   const fetchGames = () => {
-    let url = userTitle
-      ? (baseurl += userTitle + `&page=${props.pageNumber}`)
+    let url = props.userTitle
+      ? (baseurl += props.userTitle + `&page=${props.pageNumber}`)
       : alert("please enter a value in the search bar");
 
     fetch(url, {
@@ -107,7 +109,7 @@ function Navbar(props) {
         console.log(data.results);
         props.setResults(data.results);
         props.setCount(data.count);
-        currentTitle = userTitle;
+        currentTitle = props.userTitle;
       })
       .catch(err => console.log(err));
   };
@@ -131,7 +133,7 @@ function Navbar(props) {
   return (
     <div className={classes.grow}>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar style={{ justifyContent: "space-between" }}>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Typography
               className={classes.title}
@@ -154,31 +156,36 @@ function Navbar(props) {
                 input: classes.inputInput
               }}
               inputProps={{ "aria-label": "search" }}
-              onChange={e => setUserTitle(e.target.value)}
+              onChange={e => props.setUserTitle(e.target.value)}
               onKeyPress={e => {
                 if (e.key === "Enter") {
                   if (props.location.pathname !== "/home") {
                     props.history.push("/home");
                   }
-                  if (userTitle !== currentTitle) {
+                  if (props.userTitle !== currentTitle) {
                     console.log(currentTitle);
                     if (props.pageNumber > 1) {
                       props.setPageNumber(1);
                     } else {
                       fetchGames();
                     }
-                    currentTitle = userTitle;
+                    currentTitle = props.userTitle;
                   }
                 }
               }}
             />
           </div>
-          {authSwap()}
-          {props.sessionToken ? (
-            <Link to="/user/gamelist" style={{ textDecoration: "none" }}>
-              <Tab label="My List" style={{ color: "white", opacity: 1 }}></Tab>
-            </Link>
-          ) : null}
+          <div id="testing123">
+            {authSwap()}
+            {props.sessionToken ? (
+              <Link to="/user/gamelist" style={{ textDecoration: "none" }}>
+                <Tab
+                  label="My List"
+                  style={{ color: "white", opacity: 1 }}
+                ></Tab>
+              </Link>
+            ) : null}
+          </div>
         </Toolbar>
       </AppBar>
       <Toolbar />

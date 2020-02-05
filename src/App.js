@@ -17,6 +17,7 @@ function App() {
   const [sessionToken, setSessionToken] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const [count, setCount] = useState(0);
+  const [userTitle, setUserTitle] = useState("call of duty");
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -46,6 +47,8 @@ function App() {
           setCount={setCount}
           sessionToken={sessionToken}
           setPageNumber={setPageNumber}
+          userTitle={userTitle}
+          setUserTitle={setUserTitle}
         />
         <Switch>
           <Route exact path="/">
@@ -65,6 +68,7 @@ function App() {
               setPageNumber={setPageNumber}
               count={count}
               setCount={count}
+              userTitle={userTitle}
             />
           </Route>
           <Route exact path="/user/gamelist">

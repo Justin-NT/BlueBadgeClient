@@ -23,17 +23,18 @@ const GameDB = props => {
   const pageUp = () => {
     // Using results.length to determine how much info is shown on the page. 20 results are shown per page by default, but not every search returns 20 results, so can't hardcode the #
     console.log(trackerValue);
-    if (props.count - trackerValue <= 0) {
-      return;
+    if (props.userTitle) {
+      if (props.count - trackerValue <= 0) {
+        return;
+      } else {
+        props.setPageNumber(props.pageNumber + 1);
+        setTrackerValue(trackerValue + 20);
+      }
+      console.log(props.pageNumber);
     } else {
-      props.setPageNumber(props.pageNumber + 1);
-      setTrackerValue(trackerValue + 20);
+      return;
     }
-
-    console.log(props.pageNumber);
   };
-
-  console.log("gamedb.js", props.pageNumber);
 
   const pageDown = () => {
     console.log(trackerValue);
