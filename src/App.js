@@ -34,8 +34,6 @@ function App() {
     setSessionToken("");
   };
 
-  console.log("app.js", pageNumber);
-
   return (
     <div>
       <Router>

@@ -9,6 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { Alert } from "@material-ui/lab";
 import "./Signin.css";
 import APIURL from "../../helpers/environment";
 
@@ -51,6 +52,7 @@ const useStyles = makeStyles(theme => ({
 const SignIn = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [failureSwitch, setFailureSwitch] = useState(false);
   const classes = useStyles();
 
   let handleSubmit = event => {
@@ -67,7 +69,13 @@ const SignIn = props => {
           })
         })
           .then(response => response.json())
-          .then(data => props.updateToken(data.sessionToken))
+          .then(data => {
+            if ("error" in data) {
+              failureAlert();
+            } else {
+              props.updateToken(data.sessionToken);
+            }
+          })
       : alert("Your password must be 5 characters or longer!");
   };
 
@@ -81,6 +89,23 @@ const SignIn = props => {
       props.history.push("/home");
     }
   }, [props.sessionToken]);
+
+  const failureAlert = () => {
+    setFailureSwitch(true);
+    setTimeout(() => {
+      setFailureSwitch(false);
+    }, 2000);
+  };
+
+  const displayFailure = () => {
+    return failureSwitch ? (
+      <Grid item xs={12}>
+        <Alert color="error" severity="error">
+          Failed to Signup! Make sure your email and password are valid!
+        </Alert>
+      </Grid>
+    ) : null;
+  };
 
   return (
     <div id="componentWrapper">
@@ -139,6 +164,7 @@ const SignIn = props => {
               Sign In
             </Button>
             <Grid container justify="center">
+              {displayFailure()}
               <Grid item>
                 <Link
                   to="/signup"
@@ -161,59 +187,3 @@ const SignIn = props => {
 };
 
 export default withRouter(SignIn);
-
-// import React, { useState } from "react";
-// import { Form, FormGroup, Label, Input, Button } from "reactstrap";
-// import { Link } from "react-router-dom";
-// import styled from "styled-components";
-
-// const Signin = props => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   let handleSubmit = event => {
-//     event.preventDefault();
-//     fetch("http://localhost:3000/user/signin", {
-//       method: "POST",
-//       body: JSON.stringify({
-//         email: email,
-//         password: password
-//       }),
-//       headers: new Headers({
-//         "Content-Type": "application/json"
-//       })
-//     })
-//       .then(response => response.json())
-//       .then(data => props.updateToken(data.sessionToken));
-//   };
-
-//   return (
-//     <div>
-//       <h1>Sign In</h1>
-//       <Form onSubmit={handleSubmit}>
-//         <FormGroup>
-//           <Label htmlFor="email">Email</Label>
-//           <Input
-//             name="email"
-//             value={email}
-//             onChange={e => setEmail(e.target.value)}
-//           ></Input>
-//         </FormGroup>
-//         <FormGroup>
-//           <Label htmlFor="password">Password</Label>
-//           <Input
-//             name="password"
-//             value={password}
-//             onChange={e => setPassword(e.target.value)}
-//           ></Input>
-//         </FormGroup>
-//         <Button type="submit">Login</Button>
-//       </Form>
-//       <Link to="/signup">
-//         <span className="fakeAnchor">Don't have an account?</span>
-//       </Link>
-//     </div>
-//   );
-// };
-
-// export default Signin;

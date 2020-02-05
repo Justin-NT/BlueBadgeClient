@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import APIURL from "../../helpers/environment";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles({
   card: {
@@ -170,7 +170,12 @@ const GameDisplay = props => {
           title="Game Image"
         />
         {/* <CardContent style={{ backgroundColor: "papayawhip" }}> */}
-        <CardContent style={{ backgroundColor: "#4F3380" }}>
+        <CardContent
+          style={{
+            backgroundColor: "#4F3380",
+            textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+          }}
+        >
           <Typography
             gutterBottom
             variant="h5"

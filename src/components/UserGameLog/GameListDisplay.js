@@ -10,14 +10,17 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import APIURL from "../../helpers/environment";
 import Grid from "@material-ui/core/Grid";
-import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 500,
     minWidth: 240,
-    border: "1px solid white",
-    color: "white"
+    border: "1px solid black",
+    color: "white",
+    textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black",
+    "&:hover": {
+      border: "1px solid white"
+    }
   },
   media: {
     height: 240
@@ -104,7 +107,12 @@ const GameListDisplay = props => {
           image={props.game.backgroundImage}
           title={props.game.title}
         />
-        <CardContent style={{ backgroundColor: "#4F3380" }}>
+        <CardContent
+          style={{
+            backgroundColor: "#4F3380",
+            textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"
+          }}
+        >
           <Typography
             gutterBottom
             variant="h5"
@@ -140,10 +148,8 @@ const GameListDisplay = props => {
           </Grid>
           <form className={classes.root} id={`${props.game.id}1`}>
             <TextField
-              style={{ color: "white" }}
               id={`${props.game.id}`}
               placeholder={nullComment()}
-              style={{ color: "white" }}
               rowsMax="12"
               value={comment}
               variant="outlined"
